@@ -17,4 +17,6 @@ func main() {
 func SetupRoutes(app *fiber.App) {
 	app.Get("/", handlers.Show)
 	app.Post("/add", handlers.Add)
+	app.Delete("/del/:title", handlers.Del)
+	app.Get("/change/:title", handlers.ChangeFlag)
 }
