@@ -11,8 +11,10 @@ import (
 // DeleteTags		godoc
 // @Summary Удаление задачи по заголовку
 // @Description Удаляет задачу ToDo по заголовку.
+// @Tags Delete
 // @Param title path string true "Заголовок задачи"
-// @Success 200 {string} string "Задача удалена успешно"
+// @Produce application/json
+// @Success 200 {string} string "todo deleted successfully"
 // @Router /del/{title} [delete]
 func Del(c *fiber.Ctx) error { // Delete ToDo by Title
 	needTitle := c.Params("title", "")

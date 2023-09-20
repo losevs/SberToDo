@@ -2,8 +2,10 @@ package main
 
 import (
 	"sber/database"
+	_ "sber/docs"
 	"sber/handlers"
 
+	swagger "github.com/arsmn/fiber-swagger/v2"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -15,7 +17,7 @@ func main() {
 }
 
 func SetupRoutes(app *fiber.App) {
-	// app.Get("/swagger/*", )
+	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	app.Get("/show", handlers.Show)
 	app.Get("/flag/:title", handlers.ChangeFlag)

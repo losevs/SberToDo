@@ -13,7 +13,7 @@ import (
 // CreateTags		godoc
 // @Summary Добавление новой задачи
 // @Description Добавляет новую задачу ToDo.
-// @Tags ToDo
+// @Tags Post
 // @Accept json
 // @Produce json
 // @Param task body models.ToDoRequest true "Новая задача"

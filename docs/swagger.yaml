@@ -1,0 +1,200 @@
+definitions:
+  models.ToDo:
+    properties:
+      date:
+        type: string
+      desc:
+        type: string
+      flag:
+        type: boolean
+      title:
+        type: string
+    type: object
+  models.ToDoRequest:
+    properties:
+      date:
+        type: string
+      desc:
+        type: string
+      flag:
+        type: boolean
+      title:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /add:
+    post:
+      consumes:
+      - application/json
+      description: Добавляет новую задачу ToDo.
+      parameters:
+      - description: Новая задача
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/models.ToDoRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ToDo'
+      summary: Добавление новой задачи
+      tags:
+      - Post
+  /change/{title}:
+    patch:
+      consumes:
+      - application/json
+      description: Изменяет задачу ToDo по заголовку.
+      parameters:
+      - description: Заголовок задачи
+        in: path
+        name: title
+        required: true
+        type: string
+      - description: Обновленная задача
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/models.ToDoRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ToDo'
+      summary: Изменение задачи по заголовку
+      tags:
+      - Patch
+  /date/{flag}:
+    get:
+      description: Получает список задач ToDo с фильтром по флагу выполнения и сортировкой
+        по дате.
+      parameters:
+      - description: Флаг выполнения задачи (true/false)
+        in: path
+        name: flag
+        required: true
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ToDo'
+            type: array
+      summary: Отображение списка задач с фильтром по флагу выполнения и сортировкой
+        по дате
+      tags:
+      - Get
+  /del/{title}:
+    delete:
+      description: Удаляет задачу ToDo по заголовку.
+      parameters:
+      - description: Заголовок задачи
+        in: path
+        name: title
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: todo deleted successfully
+          schema:
+            type: string
+      summary: Удаление задачи по заголовку
+      tags:
+      - Delete
+  /false:
+    get:
+      description: Получает список задач ToDo с фильтром по флагу выполнения и пагинацией.
+      parameters:
+      - description: Флаг выполнения задачи (true/false)
+        in: query
+        name: flag
+        type: boolean
+      - description: Номер страницы для пагинации
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ToDo'
+            type: array
+      summary: Отображение списка задач с фильтром по флагу выполнения и пагинацией
+      tags:
+      - Get
+  /flag/{title}:
+    get:
+      consumes:
+      - application/json
+      description: Меняет флаг выполнения задачи ToDo по ее заголовку
+      parameters:
+      - description: Заголовок задачи
+        in: path
+        name: title
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ToDo'
+      summary: Изменение флага выполнения задачи ToDo
+      tags:
+      - Get
+  /show:
+    get:
+      description: Show all.
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ToDo'
+            type: array
+      summary: Show all ToDo's
+      tags:
+      - Get
+  /true:
+    get:
+      description: Получает список задач ToDo с фильтром по флагу выполнения и пагинацией.
+      parameters:
+      - description: Флаг выполнения задачи (true/false)
+        in: query
+        name: flag
+        type: boolean
+      - description: Номер страницы для пагинации
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ToDo'
+            type: array
+      summary: Отображение списка задач с фильтром по флагу выполнения и пагинацией
+      tags:
+      - Get
+swagger: "2.0"

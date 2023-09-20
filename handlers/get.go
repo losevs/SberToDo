@@ -10,6 +10,7 @@ import (
 )
 
 // @Summary Show all ToDo's
+// @Tags Get
 // @Description Show all.
 // @Success 200 {array} models.ToDo{}
 // @Router /show [get]
@@ -24,7 +25,8 @@ func Show(c *fiber.Ctx) error { // Show all ToDo's
 }
 
 // @Summary Изменение флага выполнения задачи ToDo
-// @Description Меняет флаг выполнения задачи ToDo по ее заголовку.
+// @Description Меняет флаг выполнения задачи ToDo по ее заголовку
+// @Tags Get
 // @Accept json
 // @Produce json
 // @Param title path string true "Заголовок задачи"
@@ -51,10 +53,11 @@ func ChangeFlag(c *fiber.Ctx) error { // Change Flag true/false by title
 // TruePagTags		godoc
 // @Summary Отображение списка задач с фильтром по флагу выполнения и пагинацией
 // @Description Получает список задач ToDo с фильтром по флагу выполнения и пагинацией.
+// @Tags Get
 // @Produce json
 // @Param flag query bool false "Флаг выполнения задачи (true/false)"
 // @Param page query int false "Номер страницы для пагинации"
-// @Success 200 {array} ToDoTask
+// @Success 200 {array} models.ToDo{}
 // @Router /true [get]
 func TruePag(c *fiber.Ctx) error { // Pagination true
 	needPage, err := strconv.Atoi(c.Query("page", "1"))
@@ -75,10 +78,11 @@ func TruePag(c *fiber.Ctx) error { // Pagination true
 // FalsePagTags		godoc
 // @Summary Отображение списка задач с фильтром по флагу выполнения и пагинацией
 // @Description Получает список задач ToDo с фильтром по флагу выполнения и пагинацией.
+// @Tags Get
 // @Produce json
 // @Param flag query bool false "Флаг выполнения задачи (true/false)"
 // @Param page query int false "Номер страницы для пагинации"
-// @Success 200 {array} ToDoTask
+// @Success 200 {array} models.ToDo{}
 // @Router /false [get]
 func FalsePag(c *fiber.Ctx) error { // Pagination false
 	needPage, err := strconv.Atoi(c.Query("page", "1"))
@@ -99,9 +103,10 @@ func FalsePag(c *fiber.Ctx) error { // Pagination false
 // FlagAscTags		godoc
 // @Summary Отображение списка задач с фильтром по флагу выполнения и сортировкой по дате
 // @Description Получает список задач ToDo с фильтром по флагу выполнения и сортировкой по дате.
+// @Tags Get
 // @Produce json
 // @Param flag path bool true "Флаг выполнения задачи (true/false)"
-// @Success 200 {array} ToDoTask
+// @Success 200 {array} models.ToDo{}
 // @Router /date/{flag} [get]
 func FlagAsc(c *fiber.Ctx) error { // Flag asc order
 	needFlag, err := strconv.ParseBool(c.Params("flag", "false"))

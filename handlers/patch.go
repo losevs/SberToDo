@@ -15,10 +15,11 @@ import (
 // @Summary Изменение задачи по заголовку
 // @Description Изменяет задачу ToDo по заголовку.
 // @Param title path string true "Заголовок задачи"
+// @Tags Patch
 // @Accept json
 // @Produce json
-// @Param task body ToDoTask true "Обновленная задача"
-// @Success 200 {object} ToDoTask
+// @Param task body models.ToDoRequest true "Обновленная задача"
+// @Success 200 {object} models.ToDo
 // @Router /change/{title} [patch]
 func PatchToDo(c *fiber.Ctx) error { // Update ToDo by Title
 	needTitle := c.Params("title", "")
