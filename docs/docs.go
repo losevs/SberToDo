@@ -143,9 +143,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "todo deleted successfully",
+                        "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/models.RespDelSucc"
                         }
                     }
                 }
@@ -279,6 +279,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "models.RespDelSucc": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "todo": {
+                    "$ref": "#/definitions/models.ToDo"
+                }
+            }
+        },
         "models.ToDo": {
             "type": "object",
             "properties": {

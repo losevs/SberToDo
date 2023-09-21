@@ -1,4 +1,11 @@
 definitions:
+  models.RespDelSucc:
+    properties:
+      message:
+        type: string
+      todo:
+        $ref: '#/definitions/models.ToDo'
+    type: object
   models.ToDo:
     properties:
       date:
@@ -109,9 +116,9 @@ paths:
       - application/json
       responses:
         "200":
-          description: todo deleted successfully
+          description: OK
           schema:
-            type: string
+            $ref: '#/definitions/models.RespDelSucc'
       summary: Удаление задачи по заголовку
       tags:
       - Delete
