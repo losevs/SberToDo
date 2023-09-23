@@ -16,7 +16,7 @@ import (
 // @Router /show [get]
 func Show(c *fiber.Ctx) error { // Show all ToDo's
 	query := []models.ToDo{}
-	if check := database.DB.Db.Find(&query); check.RowsAffected == 0 {
+	if check := database.Db.Find(&query); check.RowsAffected == 0 {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": "todo list is empty",
 		})
@@ -40,13 +40,13 @@ func ChangeFlag(c *fiber.Ctx) error { // Change Flag true/false by title
 		})
 	}
 	emptyEx := new(models.ToDo)
-	if check := database.DB.Db.Where("title = ?", needTitle).First(&emptyEx); check.RowsAffected == 0 {
+	if check := database.Db.Where("title = ?", needTitle).First(&emptyEx); check.RowsAffected == 0 {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": fmt.Sprintf("there is no todo with title = %s", needTitle),
 		})
 	}
 	emptyEx.Flag = !emptyEx.Flag
-	database.DB.Db.Where("title = ?", needTitle).Save(&emptyEx)
+	database.Db.Where("title = ?", needTitle).Save(&emptyEx)
 	return c.Status(fiber.StatusOK).JSON(emptyEx)
 }
 
@@ -67,7 +67,7 @@ func TruePag(c *fiber.Ctx) error { // Pagination true
 		})
 	}
 	todos := []models.ToDo{}
-	if check := database.DB.Db.Offset((needPage-1)*3).Limit(3).Where("flag = ?", true).Find(&todos); check.RowsAffected == 0 {
+	if check := database.Db.Offset((needPage-1)*3).Limit(3).Where("flag = ?", true).Find(&todos); check.RowsAffected == 0 {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": fmt.Sprintf("there is no true todos on page=%d", needPage),
 		})
@@ -92,7 +92,7 @@ func FalsePag(c *fiber.Ctx) error { // Pagination false
 		})
 	}
 	todos := []models.ToDo{}
-	if check := database.DB.Db.Offset((needPage-1)*3).Limit(3).Where("flag = ?", false).Find(&todos); check.RowsAffected == 0 {
+	if check := database.Db.Offset((needPage-1)*3).Limit(3).Where("flag = ?", false).Find(&todos); check.RowsAffected == 0 {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": fmt.Sprintf("there is no false todos on page=%d", needPage),
 		})
@@ -116,7 +116,7 @@ func FlagAsc(c *fiber.Ctx) error { // Flag asc order
 		})
 	}
 	query := []models.ToDo{}
-	if check := database.DB.Db.Where("flag = ?", needFlag).Order("date asc").Find(&query); check.RowsAffected == 0 {
+	if check := database.Db.Where("flag = ?", needFlag).Order("date asc").Find(&query); check.RowsAffected == 0 {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": fmt.Sprintf("todo list with flag=%t is empty", needFlag),
 		})

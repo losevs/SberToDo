@@ -5,6 +5,7 @@ go 1.20
 require gorm.io/gorm v1.25.0
 
 require (
+	github.com/DATA-DOG/go-sqlmock v1.5.0 // indirect
 	github.com/KyleBanks/depth v1.2.1 // indirect
 	github.com/PuerkitoBio/purell v1.2.0 // indirect
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
@@ -46,6 +47,7 @@ require (
 require (
 	github.com/arsmn/fiber-swagger/v2 v2.31.1
 	github.com/gofiber/fiber/v2 v2.49.2
+	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-isatty v0.0.19 // indirect
 	golang.org/x/crypto v0.13.0 // indirect
 	golang.org/x/sys v0.12.0 // indirect

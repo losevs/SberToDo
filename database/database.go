@@ -6,25 +6,28 @@ import (
 	"os"
 	"sber/models"
 
+	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
 
-type Dbinstance struct {
-	Db *gorm.DB
-}
+var Db *gorm.DB
 
-var DB Dbinstance
-
-func ConnectDb() {
+func init() {
+	err := godotenv.Load("C:\\Users\\Owner\\Documents\\GoLang\\SberToDo\\.env")
+	if err != nil {
+		fmt.Println(err)
+	}
 	dsn := fmt.Sprintf(
-		"host=db user=%s password=%s dbname=%s port=5432 sslmode=disable",
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
+		os.Getenv("DB_HOST"),
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASS"),
 		os.Getenv("DB_NAME"),
+		os.Getenv("DB_PORT"),
 	)
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
+	Db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})
 
@@ -34,12 +37,8 @@ func ConnectDb() {
 	}
 
 	log.Println("connected")
-	db.Logger = logger.Default.LogMode(logger.Info)
+	Db.Logger = logger.Default.LogMode(logger.Info)
 
 	log.Println("running migrations")
-	db.AutoMigrate(&models.ToDo{})
-
-	DB = Dbinstance{
-		Db: db,
-	}
+	Db.AutoMigrate(&models.ToDo{})
 }

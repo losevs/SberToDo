@@ -20,15 +20,21 @@ import (
 // @Success 200 {object} models.ToDo
 // @Router /add [post]
 func Add(c *fiber.Ctx) error { // Add new ToDo
-	query := models.ToDoRequest{}
+	query := new(models.ToDoRequest)
 	if err := c.BodyParser(&query); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"message": err,
+			"message": "bad request",
 		})
 	}
 	// Check Title if exists
 	emptyQuery := new(models.ToDo)
-	if check := database.DB.Db.Where("title = ?", query.Title).First(&emptyQuery); check.RowsAffected != 0 {
+	check := database.Db.Where("title = ?", query.Title).First(&emptyQuery)
+	// if check.Error != nil {
+	// 	return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{
+	// 		"message": "something with gorm - where, first",
+	// 	})
+	// }
+	if check.RowsAffected != 0 {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"todo":    emptyQuery,
 			"message": "this title already exisits",
@@ -73,7 +79,11 @@ func Add(c *fiber.Ctx) error { // Add new ToDo
 		Date:        DateAdd,
 		Flag:        query.Flag,
 	}
-	database.DB.Db.Create(&queryToAdd)
+	if checker := database.Db.Create(&queryToAdd); checker.Error != nil {
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{
+			"message": "something with gorm",
+		})
+	}
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"todo":    queryToAdd,
 		"message": "todo created",

@@ -24,7 +24,7 @@ func Del(c *fiber.Ctx) error { // Delete ToDo by Title
 		})
 	}
 	emptyEx := new(models.ToDo)
-	if check := database.DB.Db.Where("title = ?", needTitle).First(&emptyEx).Delete(&emptyEx); check.RowsAffected == 0 {
+	if check := database.Db.Where("title = ?", needTitle).First(&emptyEx).Delete(&emptyEx); check.RowsAffected == 0 {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": fmt.Sprintf("there is no todo with title = %s", needTitle),
 		})

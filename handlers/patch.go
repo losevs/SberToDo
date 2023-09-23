@@ -35,13 +35,13 @@ func PatchToDo(c *fiber.Ctx) error { // Update ToDo by Title
 		})
 	}
 	FoundToDo := new(models.ToDo)
-	if check := database.DB.Db.Where("title = ?", needTitle).First(&FoundToDo); check.RowsAffected == 0 {
+	if check := database.Db.Where("title = ?", needTitle).First(&FoundToDo); check.RowsAffected == 0 {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": fmt.Sprintf("there is no todo with title = %s", needTitle),
 		})
 	}
 	if query.Description != "" {
-		database.DB.Db.Model(&FoundToDo).Where("title = ?", needTitle).Update("description", query.Description)
+		database.Db.Model(&FoundToDo).Where("title = ?", needTitle).Update("description", query.Description)
 	}
 	if query.Date != "" {
 		// Check Date
@@ -76,7 +76,7 @@ func PatchToDo(c *fiber.Ctx) error { // Update ToDo by Title
 			})
 		}
 		DateAdd := time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.Local)
-		database.DB.Db.Model(&FoundToDo).Where("title = ?", needTitle).Update("date", DateAdd)
+		database.Db.Model(&FoundToDo).Where("title = ?", needTitle).Update("date", DateAdd)
 	}
 	return c.Status(fiber.StatusOK).JSON(FoundToDo)
 }
