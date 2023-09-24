@@ -298,4 +298,4 @@ $ docker compose up
 
 Запрос на адрес localhost:80/swagger/index.html
 
-add img
+![image](https://github.com/losevs/SberToDo/assets/75357413/8bb28a9a-8492-4f24-9c67-3b0d6b864a15)
