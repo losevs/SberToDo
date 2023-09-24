@@ -2,12 +2,11 @@ package main
 
 import (
 	"sber/routes"
-
-	"github.com/gofiber/fiber/v2"
+	"sber/server"
 )
 
 func main() {
-	app := fiber.New()
+	app := server.New()
 	routes.SetupRoutes(app)
 	app.Listen(":80")
 }
